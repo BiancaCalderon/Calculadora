@@ -1,7 +1,7 @@
 .button {
   width: 80px;
   height: 80px;
-  background-color: #ddd;
+  background-color: #ec7baa;
   border: none;
   border-radius: 5px;
   font-size: 24px;
@@ -10,5 +10,9 @@
 }
 
 .button:hover {
-  background-color: #ccc;
+  background-color: #cd306a;
+}
+
+.button.active {
+  background-color: #d81a5a;
 }
