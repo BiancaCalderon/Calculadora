@@ -6,7 +6,7 @@ import Button from '../components/Button';
 export default function Home() {
   const [displayValue, setDisplayValue] = useState('0');
   const [operation, setOperation] = useState('');
-  const [previousValue, setPreviousValue] = useState(0);
+  const [previousValue, setPreviousValue] = useState(null);
   const [clearDisplay, setClearDisplay] = useState(false);
   const [activeKey, setActiveKey] = useState(null);
 
@@ -23,8 +23,10 @@ export default function Home() {
       calculateResult();
     } else if (key === 'Escape') {
       clearDisplayValue();
+    } else if (key === 'Backspace') {
+      handleBackspace();
     }
-  }, []);
+  }, [displayValue, operation, previousValue, clearDisplay]);
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown);
@@ -55,49 +57,64 @@ export default function Home() {
   };
 
   const handleOperationClick = (value) => {
-    setOperation(value);
+    if (operation && !clearDisplay) {
+      calculateResult();
+    }
     setPreviousValue(parseFloat(displayValue));
+    setOperation(value);
     setClearDisplay(true);
   };
 
   const calculateResult = () => {
-    const currentValue = parseFloat(displayValue);
-    let result = 0;
-    switch (operation) {
-      case '+':
-        result = previousValue + currentValue;
-        break;
-      case '-':
-        result = previousValue - currentValue;
-        break;
-      case '*':
-        result = previousValue * currentValue;
-        break;
-      case '/':
-        if (currentValue === 0) {
-          setDisplayValue('ERROR');
+    if (operation && previousValue !== null) {
+      const currentValue = parseFloat(displayValue);
+      let result = 0;
+      switch (operation) {
+        case '+':
+          result = previousValue + currentValue;
+          break;
+        case '-':
+          result = previousValue - currentValue;
+          break;
+        case '*':
+          result = previousValue * currentValue;
+          break;
+        case '/':
+          if (currentValue === 0) {
+            setDisplayValue('ERROR');
+            return;
+          }
+          result = previousValue / currentValue;
+          break;
+        default:
           return;
-        }
-        result = previousValue / currentValue;
-        break;
-      default:
-        return;
+      }
+      if (result < 0 || result > 999999999) {
+        setDisplayValue('ERROR');
+      } else {
+        setDisplayValue(result.toString().slice(0, 9)); // Limitar el resultado a 9 caracteres
+      }
+      setOperation('');
+      setPreviousValue(null);
+      setClearDisplay(true);
     }
-    if (result < 0 || result > 999999999) {
-      setDisplayValue('ERROR');
-    } else {
-      setDisplayValue(result.toString().slice(0, 9)); // Limitar el resultado a 9 caracteres
-    }
-    setOperation('');
-    setPreviousValue(0);
-    setClearDisplay(true);
   };
 
   const clearDisplayValue = () => {
     setDisplayValue('0');
     setOperation('');
-    setPreviousValue(0);
+    setPreviousValue(null);
     setClearDisplay(false);
+  };
+
+  const handleBackspace = () => {
+    setDisplayValue(prevValue => {
+      if (prevValue.length > 1) {
+        return prevValue.slice(0, -1);
+      } else {
+        return '0';
+      }
+    });
   };
 
   const getButtonLabel = (key) => {
@@ -142,6 +159,7 @@ export default function Home() {
           />
         ))}
         <Button onClick={clearDisplayValue} label="C" active={activeKey === 'Escape'} />
+        <Button onClick={handleBackspace} label="⌫" active={activeKey === 'Backspace'} />
       </div>
     </div>
   );
