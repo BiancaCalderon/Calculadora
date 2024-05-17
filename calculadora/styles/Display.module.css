@@ -1,10 +1,12 @@
 .display {
-  width: 320px;
-  height: 80px;
-  background-color: #ffb3c4;
+  width: calc(100% - 60px); /* Reducimos aún más el ancho del display */
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding: 0 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 0 30px; /* Ajustamos el padding horizontal */
+  margin-bottom: 10px;
   font-size: 24px;
 }

@@ -37,3 +37,14 @@
 .button:hover {
   background-color: #ccc;
 }
+
+.container {
+  width: 100%;
+  max-width: 400px; 
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f190ba; 
+  border-radius: 20px; 
+  height: auto; 
+}
+
