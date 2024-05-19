@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import Home from './index';
+import Home from '../pages/index';
 
 describe('Calculator operations', () => {
   test('Addition', () => {

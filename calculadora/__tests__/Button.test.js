@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Button from './Button';
+import Button from '../components/Button';
 
 // Mockear la importación de CSS
 jest.mock('../styles/Button.module.css', () => {
