@@ -6,4 +6,7 @@ module.exports = {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy', // Permite importar archivos CSS con Jest
   },
   testPathIgnorePatterns: ['<rootDir>/.next/'], // Añadir esta línea para ignorar el directorio .next
+  collectCoverage: true,
+  coverageDirectory: 'coverage',
+  coverageReporters: ['text', 'lcov'],
 };
