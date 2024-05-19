@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useEffect, useCallback } from 'react';
 import styles from '../styles/Home.module.css';
 import Display from '../components/Display';
